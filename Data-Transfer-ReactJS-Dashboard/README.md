@@ -14,3 +14,5 @@
 4. Execute command **npm run build** to create the build out of source code.
 5. Execute command **npm install pm2 -g** to install pm2 globally
 6. Execute command **pm2 serve {path-to-build}/ {port}  --name "{name}"** to deploy the build(e.g : pm2 serve build/ 5000 --name "my-react-app").
+7. Execute command **pm2 list** to see the status of the react apps
+8. Exectue commadn **pm2 stop/start/delete <process id/process name>** to manage the react apps.
