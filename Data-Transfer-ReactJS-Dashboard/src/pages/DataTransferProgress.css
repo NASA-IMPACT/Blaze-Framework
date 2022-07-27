@@ -1,0 +1,83 @@
+.DataTransferProgress .clock {
+    position: absolute;
+    width: 400px;
+    height: 320px;
+    left: 80px;
+    top: 160px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .piechart {
+    position: absolute;
+    width: 400px;
+    height: 320px;
+    left: 510px;
+    top: 160px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .sealedstate {
+    position: absolute;
+    width: 400px;
+    height: 320px;
+    left: 940px;
+    top: 160px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .transferspeed {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    left: 80px;
+    top: 550px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .timetocompletetransfer {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    left: 400px;
+    top: 550px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .totaldatatransferred {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    left: 720px;
+    top: 550px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.DataTransferProgress .totalestimatedcost {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    left: 1040px;
+    top: 550px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 0.2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
