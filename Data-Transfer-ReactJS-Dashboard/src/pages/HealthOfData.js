@@ -1,12 +1,14 @@
 import './HealthOfData.css';
+import configData from '../config.json';
 const HealthOfData = () => {
     
     return (
       <div className = "HealthOfData">
     
-        <iframe className='totalthroughput' src="http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=24"frameborder="0"></iframe>
-        <iframe className="memory" src="http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=10"frameborder="0"></iframe>
-        <iframe className='avgthroughput' src="http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=14" frameborder="0"></iframe>
+        <iframe className='totalthroughput' src={configData.HEALTH_OF_DATA.TOTAL_THROUGHPUT} frameborder="0"></iframe>
+        <iframe className="memory" src={configData.HEALTH_OF_DATA.MEMORY} frameborder="0"></iframe>
+        <iframe className='avgthroughput' src={configData.HEALTH_OF_DATA.AVG_THROUGHPUT} frameborder="0"></iframe>
+        <iframe className='individualthroughput' src={configData.HEALTH_OF_DATA.INDIVIDUAL_THROUGHPUT} frameborder="0"></iframe>
       </div>
     )
 };
