@@ -12,6 +12,5 @@ const HealthOfData = () => {
       </div>
     )
 };
-  
-  export default HealthOfData;
-  
+
+export default HealthOfData;

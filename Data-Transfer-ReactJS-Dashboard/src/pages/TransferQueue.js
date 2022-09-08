@@ -62,7 +62,6 @@ const TransferQueue = () => {
         <div className='Transfer3Line'></div>
       </div>
     )
-  };
+};
   
-  export default TransferQueue;
-  
+export default TransferQueue;

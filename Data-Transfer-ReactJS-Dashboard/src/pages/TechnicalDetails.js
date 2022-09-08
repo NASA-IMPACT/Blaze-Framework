@@ -8,7 +8,6 @@ const TechnicalDetails = () => {
         
     </div>
     )
-  };
+};
   
-  export default TechnicalDetails;
-  
+export default TechnicalDetails;
