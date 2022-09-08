@@ -11,3 +11,4 @@ const TechnicalDetails = () => {
   };
   
   export default TechnicalDetails;
+  
