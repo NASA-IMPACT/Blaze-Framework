@@ -4,10 +4,6 @@ import './Layout.css';
 const Layout = () => {
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
         <ul>
           <li>
             <Link to="/">Data Transfer Progress</Link>
