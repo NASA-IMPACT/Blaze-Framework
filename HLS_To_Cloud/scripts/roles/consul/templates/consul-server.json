@@ -1,0 +1,15 @@
+{
+  "node_name": "consul-server",
+  "server": true,
+  "bootstrap": true,
+  "datacenter": "dc1",
+  "data_dir": "/home/ubuntu/consul-data",
+  "log_level": "INFO",
+  "addresses": {
+    "http": "{{ private_ip }}"
+  },
+  "bind_addr": "{{ private_ip }}",
+  "connect": {
+    "enabled": true
+  }
+}

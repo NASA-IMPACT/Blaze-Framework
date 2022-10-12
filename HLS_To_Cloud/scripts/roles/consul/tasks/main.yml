@@ -1,0 +1,23 @@
+- name: Stop Consul
+  command: "/bin/bash stop-consul.sh chdir={{ mft_deployment_directory }}"
+  ignore_errors: yes
+
+- name: Copy Consul Server Json
+  template:
+    src: consul-server.json
+    dest: "{{ mft_deployment_directory }}/consul-server.json"
+
+- name: Copy Consul Server start script
+  template:
+    src: start-consul.sh
+    dest: "{{ mft_deployment_directory }}/start-consul.sh"
+    mode: 0744
+
+- name: Copy Consul Server stop script
+  template:
+    src: stop-consul.sh
+    dest: "{{ mft_deployment_directory }}/stop-consul.sh"
+    mode: 0744
+
+- name: Start Consul
+  command: "/bin/bash start-consul.sh linux chdir={{ mft_deployment_directory }}"

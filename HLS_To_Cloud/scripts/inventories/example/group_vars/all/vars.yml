@@ -1,0 +1,13 @@
+user: ubuntu
+group: ubuntu
+
+mft_source_directory: "/home/{{ user }}/mft_source"
+mft_deployment_directory: "/home/{{ user }}/mft_deployment"
+mft_build_directory: "{{ mft_source_directory }}/airavata-mft"
+airavata_mft_repo: https://github.com/apache/airavata-mft
+airavata_mft_git_branch: master
+
+java_home: "/usr/lib/jvm/java-11"
+openjdk_version: "openjdk-11-jdk"
+apache_maven_version: "apache-maven-3.6.3"
+apache_maven_url: "https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
