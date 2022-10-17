@@ -26,12 +26,12 @@ agent.https.enabled=false
 agent.supported.protocols=SCP,LOCAL,FTP
 agent.temp.data.dir=/mnt/ramdisk/data
 
-consul.host="{{ groups['master'][0].private_ip }}"
+consul.host={{ hostvars[groups['master'][0]]['private_ip'] }}
 consul.port=8500
 
-resource.service.host="{{ groups['master'][0].private_ip }}"
+resource.service.host={{ hostvars[groups['master'][0]]['private_ip'] }}
 resource.service.port=7002
-secret.service.host="{{ groups['master'][0].private_ip }}"
+secret.service.host={{ hostvars[groups['master'][0]]['private_ip'] }}
 secret.service.port=7003
 agent.concurrent.transfers=8
 agent.concurrent.chunked.threads=20

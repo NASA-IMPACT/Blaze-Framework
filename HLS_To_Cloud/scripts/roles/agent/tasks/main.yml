@@ -22,7 +22,7 @@
     - conf
     - logs
 
-- name: Copy application properties file {{ groups['master'] }}
+- name: Copy application properties file
   template: "src=application.properties.j2
             dest={{ mft_deployment_directory }}/{{ distribution_name }}/conf/application.properties
             owner={{ user }}
