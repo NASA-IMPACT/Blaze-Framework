@@ -1,0 +1,6 @@
+---
+- hosts: agents
+  roles:
+#    - env-setup
+#    - build-mft
+    - agent

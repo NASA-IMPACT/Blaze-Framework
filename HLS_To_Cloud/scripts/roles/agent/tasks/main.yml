@@ -1,0 +1,56 @@
+- name: Create MFT API dir
+  file: path="{{ mft_deployment_directory }}/{{ distribution_name }}" state=directory owner="{{ user }}" group="{{ group }}"
+
+- name: Stop Agent Daemon
+  command: "/bin/bash bin/agent-daemon.sh stop chdir={{ mft_deployment_directory }}/{{ distribution_name }}"
+  ignore_errors: yes
+
+- name: Delete lib/ bin dir of api
+  file:
+    state: absent
+    path: "{{ mft_deployment_directory }}/{{ distribution_name }}/{{ item }}"
+  with_items:
+    - lib
+    - bin
+    - conf
+
+- name: Create lib, bin, conf and log dir
+  file: path="{{ mft_deployment_directory }}/{{ distribution_name }}/{{ item }}" state=directory owner="{{ user }}" group="{{ group }}"
+  with_items:
+    - lib
+    - bin
+    - conf
+    - logs
+
+- name: Copy application properties file
+  template: "src=application.properties.j2
+            dest={{ mft_deployment_directory }}/{{ distribution_name }}/conf/application.properties
+            owner={{ user }}
+            group={{ user }}
+            mode=\"u=rw,g=r,o=r\""
+
+- name: Copy log4j2 configuration file
+  template: "src=log4j2.xml
+            dest={{ mft_deployment_directory }}/{{ distribution_name }}/conf/log4j2.xml
+            owner={{ user }}
+            group={{ group }}
+            mode=\"u=rw,g=r,o=r\""
+
+- name: Copy lib directory
+  copy:
+    src: "{{ mft_build_directory }}/{{ distribution_name }}/lib/"
+    dest: "{{ mft_deployment_directory }}/{{ distribution_name }}/lib"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    remote_src: yes
+
+- name: Copy bin directory
+  copy:
+    src: "{{ mft_build_directory }}/{{ distribution_name }}/bin/"
+    dest: "{{ mft_deployment_directory }}/{{ distribution_name }}/bin"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    remote_src: yes
+
+- name: Start Agent Daemon
+  command: "./bin/agent-daemon.sh start chdir={{ mft_deployment_directory }}/{{ distribution_name }}"

@@ -1,0 +1,6 @@
+---
+- name: Start catalog
+  systemd:
+    name: catalog
+    state: started
+    enabled: yes

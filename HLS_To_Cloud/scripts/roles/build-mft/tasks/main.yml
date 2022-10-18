@@ -1,0 +1,23 @@
+- name: Create MFT source directory
+  file: path={{mft_source_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}
+
+- name: git checkout from airavata mft github repo {{ airavata_mft_repo }} branch {{ airavata_mft_git_branch }}
+  git: repo="{{ airavata_mft_repo }}"
+    dest="{{ mft_source_directory }}"
+    version="{{ airavata_mft_git_branch }}"
+  register: checkout
+  tags: update
+
+- name: Run maven build
+  command: /bin/bash build.sh chdir="{{ mft_source_directory }}/scripts/"
+
+- name: Create MFT deployment directory
+  file: path={{mft_deployment_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}

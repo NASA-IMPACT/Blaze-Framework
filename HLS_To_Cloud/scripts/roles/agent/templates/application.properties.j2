@@ -1,0 +1,39 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+spring.main.web-application-type=NONE
+agent.id={{ agent_id }}
+agent.secret=CHANGE_ME
+agent.host=localhost
+agent.advertised.url=http://localhost
+agent.user=dimuthu
+agent.http.port=3333
+agent.https.enabled=false
+agent.supported.protocols=SCP,LOCAL,FTP
+agent.temp.data.dir=/mnt/ramdisk/data
+
+consul.host={{ hostvars[groups['master'][0]]['private_ip'] }}
+consul.port=8500
+
+resource.service.host={{ hostvars[groups['master'][0]]['private_ip'] }}
+resource.service.port=7002
+secret.service.host={{ hostvars[groups['master'][0]]['private_ip'] }}
+secret.service.port=7003
+agent.concurrent.transfers=8
+agent.concurrent.chunked.threads=20
+agent.chunk.size=20
+agent.chunk.streaming.enabled=false
