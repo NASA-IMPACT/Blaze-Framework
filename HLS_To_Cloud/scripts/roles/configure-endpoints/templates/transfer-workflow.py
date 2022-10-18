@@ -55,7 +55,7 @@ def update_completed_transfers(**context):
     for faileded_id in failed_ids:
         response = requests.patch("http://172.17.0.1:5000/catalogue/" + faileded_id, json= {"transfer_status": "FAILED"})
 
-    file_count_for_next_iteration = 5 - len(in_progess_ids)
+    file_count_for_next_iteration = 500 - len(in_progess_ids)
     context['ti'].xcom_push(key="file_count_for_next_iteration", value = file_count_for_next_iteration)
     print("File count for next iteration ", file_count_for_next_iteration)
 
@@ -90,8 +90,8 @@ def submit_to_mft(**context):
 
     client = mft_client.MFTClient(transfer_api_host = "172.17.0.1", resource_service_host = "172.17.0.1", secret_service_host="172.17.0.1")
 
-    source_id = "f693b84b-107e-4b0e-8aa6-673cb8ce2358"
-    dest_id = "6e0a006a-e4f8-4ed1-84fb-1699556fa8dd"
+    source_id = "{{ source_storage_id }}"
+    dest_id = "{{ destination_storage_id }}"
 
     source_search_req = StorageSecretMap_pb2.StorageSecretSearchRequest(storageId=source_id, type=StorageSecretMap_pb2.StorageSecret.StorageType.S3)
     source_search_resp = client.storage_secret_map_api.searchStorageSecret(source_search_req)
@@ -124,7 +124,7 @@ def update_submitted_transfers(**context):
     print("Updating the transfer status")
 
 
-with DAG(dag_id="hls-nasa-ibm", start_date=datetime(2021,1,1), schedule_interval=None, catchup=False) as dag:
+with DAG(dag_id="transfer-workflow", start_date=datetime(2021,1,1), schedule_interval=None, catchup=False) as dag:
     task1 = PythonOperator(task_id="fetch_pending", python_callable=fetch_pending)
     task2 = PythonOperator(task_id="get_transfer_status_from_mft", python_callable=get_transfer_status_from_mft)
     task3 = PythonOperator(task_id="update_completed_transfers", python_callable=update_completed_transfers)

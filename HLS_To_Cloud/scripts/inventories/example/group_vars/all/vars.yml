@@ -17,6 +17,11 @@ catalog_db_name: catalog_db
 catalog_db_user: hls_user
 catalog_db_password: hls_password
 
+airflow_source_directory: "/home/{{ user }}/airflow"
+
+nasa_s3_bucket: lp-prod-protected
+nasa_s3_endpoint: https://s3.us-west-2.amazonaws.com
+
 java_home: "/usr/lib/jvm/java-11"
 openjdk_version: "openjdk-11-jdk"
 apache_maven_version: "apache-maven-3.6.3"
