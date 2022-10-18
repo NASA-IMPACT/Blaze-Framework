@@ -1,0 +1,17 @@
+---
+- hosts: master
+  vars_prompt:
+
+    - name: username
+      prompt: What is your username for https://urs.earthdata.nasa.gov ?
+      private: no
+
+    - name: password
+      prompt: What is your password for https://urs.earthdata.nasa.gov?
+
+    - name: destination_storage_id
+      prompt: What is the destination storage id? To create one, login to mft-master and refer to java -jar /home/ubuntu/mft_deployment/mft-client.jar s3 remote add -h
+      private: no
+
+  roles:
+    - configure-endpoints

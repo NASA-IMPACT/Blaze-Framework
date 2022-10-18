@@ -1,0 +1,75 @@
+- name: Create Airflow source directory
+  file: path={{airflow_source_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}
+
+- name: Create Airflow support directories
+  file: path={{airflow_source_directory}}/{{ item }}
+    state=directory
+    mode=0777
+    owner={{ user }}
+    group={{ group }}
+  with_items:
+    - dags
+    - docker
+    - logs
+    - plugins
+
+- name: Copy airflow docker file
+  template: "src=Dockerfile
+            dest={{ airflow_source_directory }}/docker/Dockerfile
+            owner={{ user }}
+            group={{ group }}
+            mode=\"u=rw,g=rw,o=r\""
+
+- name: Copy airflow docker composer file
+  template: "src=docker-compose.yaml
+            dest={{ airflow_source_directory }}/docker-compose.yaml
+            owner={{ user }}
+            group={{ group }}
+            mode=\"u=rw,g=rw,o=r\""
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker.io
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-compose
+    state: latest
+  become: yes
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Add user to docker group
+  user:
+    name: "{{ item }}"
+    append: yes
+    groups: docker
+  become: true
+  with_items: '{{ user }}'
+
+- name: reset ssh connection to allow user changes to affect ansible user
+  ansible.builtin.meta:
+    reset_connection
+
+- name: Tear down existing Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    state: absent
+
+- name: Create and start Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    build: true
+  register: output
+
+- ansible.builtin.debug:
+    var: output

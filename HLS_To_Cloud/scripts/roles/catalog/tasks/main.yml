@@ -1,3 +1,54 @@
+- name: Create Catalog source directory
+  file: path={{catalog_source_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}
+
+- name: git checkout from airavata mft github repo {{ catalog_repo }} branch {{ catalog_git_branch }}
+  git: repo="{{ catalog_repo }}"
+    dest="{{ catalog_source_directory }}"
+    version="{{ catalog_git_branch }}"
+  register: checkout
+  failed_when:
+    - checkout.failed
+    - not 'Local modifications exist in the destination' in checkout.msg
+  tags: update
+
+- name: Install pip
+  ansible.builtin.apt:
+    name: python3-pip
+  become: yes
+
+- name: Install venv
+  ansible.builtin.apt:
+    name: python3-venv
+  become: yes
+
+- name: Install postgresql
+  ansible.builtin.apt:
+    name: postgresql
+  become: yes
+
+- name: Install postgresql-contrib
+  ansible.builtin.apt:
+    name: postgresql-contrib
+  become: yes
+
+- name: Install libpq-dev
+  ansible.builtin.apt:
+    name: libpq-dev
+  become: yes
+
+- name: Install python3-psycopg2
+  ansible.builtin.apt:
+    name: python3-psycopg2
+  become: yes
+
+- name: Install acl
+  ansible.builtin.apt:
+    name: acl
+  become: yes
 
 - name: Create postgres database
   become: true
