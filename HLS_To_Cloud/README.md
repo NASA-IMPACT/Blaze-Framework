@@ -6,7 +6,7 @@ For the Egress cross reduction, NASA S3 buckets only provide data for clients li
 ### Transfer Architecture
 Below diagram shows the top level transfer architecture to move data from NASA S3 buckets to any cloud resource endpoint you select
 
-![Transfer Architecture](Transfer Architecture.jpg)
+![Transfer Architecture](transfer-architecture.jpg)
 
 ### Deployment
 
