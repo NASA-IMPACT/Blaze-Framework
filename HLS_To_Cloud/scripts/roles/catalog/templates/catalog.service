@@ -1,0 +1,11 @@
+[Unit]
+Description=Catalog Service
+
+[Service]
+User={{ user }}
+Group={{ group }}
+WorkingDirectory = {{ catalog_source_directory }}
+ExecStart={{ catalog_source_directory }}/venv/bin/gunicorn --bind 0.0.0.0:5000 --workers=1 --threads=8 src.app:app --timeout=900
+
+[Install]
+WantedBy=multi-user.target

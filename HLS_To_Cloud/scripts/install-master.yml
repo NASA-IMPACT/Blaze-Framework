@@ -1,11 +1,12 @@
 ---
 - hosts: master
   roles:
-    - env-setup
-    - build-mft
-    - consul
-    - controller
-    - resource
-    - secret
-    - api
-    - controller
+#    - env-setup
+#    - build-mft
+#    - consul
+#    - controller
+#    - resource
+#    - secret
+#    - api
+#    - controller
+    - catalog
