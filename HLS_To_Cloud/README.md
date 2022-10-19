@@ -25,7 +25,7 @@ To have a minimal transfer layer, there should be 2 EC2 VMS (one for MFT Master 
 * Make a copy of scrips/inventories/example/hosts.example to scrips/inventories/example/hosts and update public ip, private ip and agent id fields accordingly. Private ip is the ip VM gets through the private VPC. 
 * Update security groups of master vm as below. Update 172.31.32.0/20 with the subnet of your VPC
 
-![Security Groups](security-groups.png)
+![Security Groups](security-groups-new.png)
 
 * Next we install Master, Agent and Endpoint Configurations through set of ansible scripts
 * To setup the ansible environment, you need to have python3 installed in your laptop. For that, run following commands
