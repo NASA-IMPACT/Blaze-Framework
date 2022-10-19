@@ -84,8 +84,17 @@
             owner=root
             group=root
             mode=\"u=rw,g=r,o=r\""
-  notify:
-    - Start catalog
+
+- name: Ensure Catalog is in running state
+  become: yes
+  service:
+    name: catalog
+    state: started
+    enabled: yes
+
+- name: Wait until catalog port 5000 to open
+  wait_for:
+    port: 5000
 
 - name: Create Catalog data file directory
   file: path={{catalog_data_file_directory}}

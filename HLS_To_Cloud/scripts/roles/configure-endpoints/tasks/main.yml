@@ -59,3 +59,17 @@
             owner={{ user }}
             group={{ group }}
             mode=\"u=rw,g=rw,o=r\""
+
+- name: Tear down existing Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    state: absent
+
+- name: Create and start Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    build: true
+  register: output
+
+- ansible.builtin.debug:
+    var: output
