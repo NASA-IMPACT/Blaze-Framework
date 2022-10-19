@@ -24,7 +24,7 @@ agent.user=dimuthu
 agent.http.port=3333
 agent.https.enabled=false
 agent.supported.protocols=SCP,LOCAL,FTP
-agent.temp.data.dir=/mnt/ramdisk/data
+agent.temp.data.dir={{ ramdisk_mount_point }}
 
 consul.host={{ hostvars[groups['master'][0]]['private_ip'] }}
 consul.port=8500
