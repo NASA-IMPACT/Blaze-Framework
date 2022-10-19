@@ -12,8 +12,12 @@
   register: checkout
   tags: update
 
-- name: Run maven build
-  command: /bin/bash build.sh chdir="{{ mft_source_directory }}/scripts/"
+- name: Build source {{ mft_source_directory }}/scripts
+  ansible.builtin.shell: "{{ mft_source_directory }}/scripts/build.sh"
+  args:
+    chdir: "{{ mft_source_directory }}/scripts/"
+  environment:
+    PATH: "/opt/{{ apache_maven_version }}/bin/:{{ ansible_env.PATH }}"
 
 - name: Create MFT deployment directory
   file: path={{mft_deployment_directory}}

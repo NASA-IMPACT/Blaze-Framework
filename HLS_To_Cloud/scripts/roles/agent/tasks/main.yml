@@ -5,6 +5,14 @@
   command: "/bin/bash bin/agent-daemon.sh stop chdir={{ mft_deployment_directory }}/{{ distribution_name }}"
   ignore_errors: yes
 
+- name: 'Create ramdisk and mount to fstab'
+  mount: name="{{ ramdisk_mount_point }}" src=tmpfs fstype=tmpfs opts=nodev,nosuid,size=3G state=mounted
+  become: yes
+
+- name: Set ramdisk permissions
+  file: dest="{{ ramdisk_mount_point }}" owner="{{ user }}" group="{{ group }}" mode=u=rwX,g=rX,o=rX recurse=yes
+  become: yes
+
 - name: Delete lib/ bin dir of api
   file:
     state: absent
