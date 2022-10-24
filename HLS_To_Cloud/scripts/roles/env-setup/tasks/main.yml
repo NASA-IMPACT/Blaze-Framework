@@ -1,0 +1,35 @@
+- name: Update repositories cache and install Open JDK 11
+  ansible.builtin.apt:
+    name: "{{ openjdk_version }}"
+    update_cache: yes
+  become: yes
+
+- name: Install Git
+  ansible.builtin.apt:
+    name: git
+  become: yes
+
+- name: Install Unzip
+  ansible.builtin.apt:
+    name: unzip
+  become: yes
+
+- name: download {{ apache_maven_version }}
+  get_url: url="{{ apache_maven_url }}" dest="/opt/{{ apache_maven_version }}-bin.tar.gz"
+  become: yes
+  become_user: root
+
+- name: unzip maven
+  unarchive:
+    src: /opt/{{ apache_maven_version }}-bin.tar.gz
+    dest: /opt
+    remote_src: yes
+  become: yes
+  become_user: root
+
+- name: add maven to PATH
+  template:
+    src: maven.sh
+    dest: /etc/profile.d/maven.sh
+  become: yes
+  become_user: root

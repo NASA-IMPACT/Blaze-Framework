@@ -1,0 +1,5 @@
+[master]
+master ansible_host=<public ip> ansible_user=ubuntu private_ip=<private ip>
+
+[agents]
+agent1 ansible_host=<public ip> ansible_user=ubuntu private_ip=<private ip> agent_id=<Unique numeric id for agent>

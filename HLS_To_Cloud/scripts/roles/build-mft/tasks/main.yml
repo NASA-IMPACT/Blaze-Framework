@@ -1,0 +1,27 @@
+- name: Create MFT source directory
+  file: path={{mft_source_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}
+
+- name: git checkout from airavata mft github repo {{ airavata_mft_repo }} branch {{ airavata_mft_git_branch }}
+  git: repo="{{ airavata_mft_repo }}"
+    dest="{{ mft_source_directory }}"
+    version="{{ airavata_mft_git_branch }}"
+  register: checkout
+  tags: update
+
+- name: Build source {{ mft_source_directory }}/scripts
+  ansible.builtin.shell: "{{ mft_source_directory }}/scripts/build.sh"
+  args:
+    chdir: "{{ mft_source_directory }}/scripts/"
+  environment:
+    PATH: "/opt/{{ apache_maven_version }}/bin/:{{ ansible_env.PATH }}"
+
+- name: Create MFT deployment directory
+  file: path={{mft_deployment_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}

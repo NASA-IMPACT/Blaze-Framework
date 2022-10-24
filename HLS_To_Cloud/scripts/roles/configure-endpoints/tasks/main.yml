@@ -1,0 +1,75 @@
+- name: Copy netrc
+  template: "src=netrc
+            dest=/home/{{ user }}/.netrc
+            owner={{ user }}
+            group={{ group }}
+            mode=0400"
+
+- name: Copy credential fetch script
+  template: "src=fetch_cred.py
+            dest=/home/{{ user }}/fetch_cred.py
+            owner={{ user }}
+            group={{ group }}
+            mode=0400"
+
+- name: Fetch Cedentials
+  ansible.builtin.command: "python3 /home/{{ user }}/fetch_cred.py"
+  register: output
+
+- debug:
+    msg: "{{ output.stdout | trim | replace('\r', '') | from_json }}"
+
+- set_fact:
+    access_key: "{{ output.stdout | trim | replace('\r', '') | from_json | json_query('accessKeyId') }}"
+
+- debug:
+    msg: "Access Key: {{ access_key }}"
+
+- set_fact:
+    secret_key: "{{ output.stdout | trim | replace('\r', '') | from_json | json_query('secretAccessKey') }}"
+
+- debug:
+    msg: "Secret Key: {{ secret_key }}"
+
+- set_fact:
+    session_token: "{{ output.stdout | trim | replace('\r', '') | from_json | json_query('sessionToken') }}"
+
+- debug:
+    msg: "Session Token: {{ session_token }}"
+
+- name: Create Source S3 Storage
+  ansible.builtin.command: "java -jar {{ mft_deployment_directory }}/mft-client.jar s3 remote add -b {{ nasa_s3_bucket }} -e {{ nasa_s3_endpoint }} -k {{ access_key }} -n NASA-S3 -r us-west-2 -s {{ secret_key }} -t {{ session_token }}"
+  register: storage_output
+
+- debug:
+    msg: "{{ storage_output.stdout_lines | select( 'match', '^Storage Id .*$') }}"
+
+- set_fact:
+    source_storage_id: "{{ _arr.2 }}"
+  vars:
+    _line: "{{ storage_output.stdout_lines | select( 'match', '^Storage Id .*$') }}"
+    _arr: "{{ _line.0.split(' ') | map('trim') }}"
+
+- debug:
+    msg: "Source NASA S3 Storage id {{ source_storage_id }}"
+
+- name: Copy transfer workflow file
+  template: "src=transfer-workflow.py
+            dest={{ airflow_source_directory }}/dags/transfer-workflow.py
+            owner={{ user }}
+            group={{ group }}
+            mode=\"u=rw,g=rw,o=r\""
+
+- name: Tear down existing Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    state: absent
+
+- name: Create and start Airflow services
+  community.docker.docker_compose:
+    project_src: "{{ airflow_source_directory }}"
+    build: true
+  register: output
+
+- ansible.builtin.debug:
+    var: output
