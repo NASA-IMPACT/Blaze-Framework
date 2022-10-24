@@ -9,7 +9,7 @@ const Layout = () => {
           <Link to="/">Data Transfer Progress</Link>
         </li>
         <li>
-          <Link to="/healofdata">Health of Data</Link>
+          <Link to="/healthofdata">Health of Data</Link>
         </li>
         <li>
           <Link to="/technicaldetails">Technical Details</Link>
