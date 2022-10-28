@@ -23,6 +23,7 @@ To have a minimal transfer layer, there should be 2 EC2 VMS (one for MFT Master 
 
 #### Installation
 
+* All installation scripts should be executed in the user's local work station which has SSH login access to all VMs mentioned above. 
 * Make a copy of scrips/inventories/example/hosts.example to scrips/inventories/example/hosts and update the hosts file with public ip, private ip and agent id fields accordingly. Private ip is the ip VM gets through the private VPC. Agent Id can be any unique integer number.
 * Update security groups of master vm as below. Update 172.31.32.0/20 with the subnet of your VPC
 
@@ -54,7 +55,16 @@ ansible-playbook -i inventories/example install-agents.yml
 ```
 ansible-playbook -i inventories/example configure-endpoints.yml
 ```
-* While executing above ansible script, You will be asked to configure the destination storage endpoint in the MFT-Master node and get the storage_id. Here is the example of configuring a storage endpoint (java -jar /home/ubuntu/mft_deployment/mft-client.jar s3 remote add --name=hls --bucket=hls-data-transfer-ibm --key=<key> --secret=<secret> --endpoint=https://s3.us-west-2.amazonaws.com --region=us-west-2)
+* While executing above ansible script, You will be asked to configure the destination storage endpoint in the MFT-Master node and get the storage_id. Here is the example of configuring a storage endpoint
+
+Example storage creation command for AWS S3 cloud storage in us-west-2 region
+```
+java -jar /home/ubuntu/mft_deployment/mft-client.jar s3 remote add --name=<Name for the Storage> --bucket=<Bucket Name> --key=<key> --secret=<secret> --endpoint=https://s3.us-west-2.amazonaws.com --region=us-west-2
+```
+Example storage creation command for IBM cloud storage in us-east region
+```
+java -jar /home/ubuntu/mft_deployment/mft-client.jar s3 remote add --name=<Name for the Storage> --bucket=<Bucket Name> --key=<key> --secret=<secret>  --endpoint=https://s3.us-east.cloud-object-storage.appdomain.cloud --region=us-east-smart
+```
 
 * Then go back to Airflow dashboard, and you should be able to see a workflow named "transfer-workflow". Enable it and click the trigger workflow button in the top right corner. It will start transferring sample dataset mentioned in the scripts/roles/catalog/files/sample-data.csv
   
