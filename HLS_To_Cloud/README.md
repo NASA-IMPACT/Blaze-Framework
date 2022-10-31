@@ -1,20 +1,20 @@
 ### This directory contains instructions to transfer HLS Datasets to any Cloud Data Storage
 
 ### Note: 
-For the Egress cross reduction, NASA S3 buckets only provide data for clients live in US-West-2 region. Because of that, this transfer platform should be installed in US-West-2 VMs. All the egress transfer cost is billed to your account
+To limit the potential for unbounded egress costs, the NASA S3 buckets only provide data for clients that live in US-West-2 region. Because of that, this transfer platform should be installed in US-West-2 VMs. All the egress transfer cost from VMs in us-west-2 to any other region in AWS or any other cloud environment will be billed to your account
 
 ### Transfer Architecture
-Below diagram shows the top level transfer architecture to move data from NASA S3 buckets to any cloud resource endpoint you select
+The diagram below shows the top level transfer architecture to move data from NASA S3 buckets to any cloud resource endpoint
 
 ![Transfer Architecture](transfer-architecture.jpg)
 
 ### Deployment
 
-Deployment of the platform includes installation of Data Transfer Layer mentioned in the above daigram and registering source and destination storages in the Data Transfer Layer
+Deployment of the platform includes installation of the Data Transfer Layer mentioned in the above diagram and registering source and destination storages in the Data Transfer Layer
 
 #### Prerequisites
 
-To have a minimal transfer layer, there should be 2 EC2 VMS (one for MFT Master and one for MFT Agent) created inside us-west-2 region. These VMs should have following features
+To have a minimal transfer layer, there should be 2 EC2 VMs (one for MFT Master and one for MFT Agent) created inside us-west-2 region. These VMs should have following features
 * Both should have a public host name / ip assigned to ssh from outside
 * Both should share a private VPC with private ips for each VM
 * Should be initialized with Ubuntu Server 22.04 LTS (HVM) image
@@ -24,12 +24,12 @@ To have a minimal transfer layer, there should be 2 EC2 VMS (one for MFT Master 
 #### Installation
 
 * All installation scripts should be executed in the user's local work station which has SSH login access to all VMs mentioned above. 
-* Make a copy of scrips/inventories/example/hosts.example to scrips/inventories/example/hosts and update the hosts file with public ip, private ip and agent id fields accordingly. Private ip is the ip VM gets through the private VPC. Agent Id can be any unique integer number.
+* Make a copy of scripts/inventories/example/hosts.example to scripts/inventories/example/hosts and update the hosts file with public ip, private ip and agent id fields accordingly. Private ip is the ip VM gets through the private VPC. Agent Id can be any unique integer number.
 * Update security groups of master vm as below. Update 172.31.32.0/20 with the subnet of your VPC
 
 ![Security Groups](security-groups-new.png)
 
-* Next we install Master, Agent and Endpoint Configurations through set of ansible scripts
+* Next we install Master, Agent, and Endpoint Configurations through set of ansible scripts
 * To setup the ansible environment, you need to have python3 installed in your laptop. For that, run following commands
 
 ```
@@ -49,13 +49,13 @@ ansible-playbook -i inventories/example install-master.yml
 ```
 ansible-playbook -i inventories/example install-agents.yml
 ```
-* To make sure that all installed properly, go to http://<master-public-ip>:8080 from the browser and you should be able to see Airflow dashboard. Username is airflow and password is airflow. Make sure that you update the password immediately to secure the access
+* To make sure that everything installed properly, go to http://<master-public-ip>:8080 from the browser and you should be able to see Airflow dashboard. Default username is airflow and default password is airflow. Make sure that you update the password immediately to secure the access
 
-* Finally, install and setup transfer orchestration workflow by running following. For that, you need to have an account created at https://urs.earthdata.nasa.gov and installation script will ask for those credentials. This is required to generate access credentials for NASA S3 endpoint
+* Finally, install and setup transfer orchestration workflow. First, you need to have an account created at https://urs.earthdata.nasa.gov and installation script will ask for those credentials. This is required to generate access credentials for NASA S3 endpoint
 ```
 ansible-playbook -i inventories/example configure-endpoints.yml
 ```
-* While executing above ansible script, You will be asked to configure the destination storage endpoint in the MFT-Master node and get the storage_id. Here is the example of configuring a storage endpoint
+* While executing above ansible script, You will be asked to configure the destination storage endpoint in the MFT-Master node and get the storage_id. Here is an example of configuring a storage endpoint
 
 Example storage creation command for AWS S3 cloud storage in us-west-2 region
 ```
