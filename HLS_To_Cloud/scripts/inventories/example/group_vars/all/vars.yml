@@ -26,3 +26,32 @@ java_home: "/usr/lib/jvm/java-11"
 openjdk_version: "openjdk-11-jdk"
 apache_maven_version: "apache-maven-3.6.3"
 apache_maven_url: "https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+
+node_exporter_version: "1.0.1"
+node_exporter_bin: /usr/local/bin/node_exporter
+node_exporter_user: node-exporter
+node_exporter_group: "{{ node_exporter_user }}"
+node_exporter_dir_conf: /etc/node_exporter
+
+prometheus_dir_configuration: "/etc/prometheus"
+prometheus_retention_time: "365d"
+prometheus_scrape_interval: "30s"
+prometheus_node_exporter: true
+prometheus_node_exporter_group: "all"
+prometheus_env: "production"
+prometheus_var_config:
+  global:
+    scrape_interval: "{{ prometheus_scrape_interval }}"
+    evaluation_interval: 5s
+    external_labels:
+      env: '{{ prometheus_env }}'
+  scrape_configs:
+    - job_name: prometheus
+      scrape_interval: 5m
+      static_configs:
+        - targets: ['{{ inventory_hostname }}:9090']
+
+# defaults file for roles/grafana
+
+grafana_admin_password: "mypassword"
+grafana_dashobard_location: "/var/lib/grafana"

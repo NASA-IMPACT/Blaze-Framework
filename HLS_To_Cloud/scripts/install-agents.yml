@@ -4,3 +4,4 @@
     - env-setup
     - build-mft
     - agent
+    - node-exporter    
