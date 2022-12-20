@@ -1,0 +1,21 @@
+{
+    "DATA_TRANSFER_PROGRESS": {
+        "CLOCK": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=20",
+        "SEALED_STATE": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=4",
+        "PIE_CHART": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=2",
+        "TRANSFER_SPEED": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=22",
+        "TIME_TO_COMPLETE_TRANSFER" : "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=28",
+        "TOTAL_DATA_TRANSFERRED" : "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=26",
+        "TOTAL_ESTIMATED_COST" : "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=30"
+    },
+    "HEALTH_OF_DATA": {
+        "TOTAL_THROUGHPUT": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=24",
+        "MEMORY": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&from=1661250282900&to=1661271882900&panelId=10",
+        "AVG_THROUGHPUT": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=14",
+        "INDIVIDUAL_THROUGHPUT": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&refresh=5s&panelId=12"
+    },
+    "TECHNICAL_DETAILS":{
+        "UP_TIME": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&panelId=16",
+        "LOAD": "http://ec2-35-88-36-61.us-west-2.compute.amazonaws.com:3000/d-solo/vUMFoZrnk/hls-data-transfer-metrics?orgId=1&panelId=6"
+    }
+}

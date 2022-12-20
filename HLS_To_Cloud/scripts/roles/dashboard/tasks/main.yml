@@ -1,0 +1,48 @@
+---
+# tasks file for roles/dashboard
+
+- name: Installing nodejs
+  become: true
+  apt: name=nodejs update_cache=yes
+
+- name: Installing npm
+  become: true
+  apt: name=npm update_cache=yes
+
+- name: Create HLS Dashboard source directory
+  file: path={{hls_dashboard_source_directory}}
+    state=directory
+    mode=0755
+    owner={{ user }}
+    group={{ group }}
+
+- name: git checkout from hls_data_transfer_dashboard github repo {{ hls_dashboard_repo }} branch {{ hls_dashboard_git_branch }}
+  git: repo="{{ hls_dashboard_repo }}"
+    dest="{{ hls_dashboard_source_directory }}/"
+    version="{{ hls_dashboard_git_branch }}"
+  register: checkout
+  failed_when:
+    - checkout.failed
+    - not 'Local modifications exist in the destination' in checkout.msg
+  tags: update
+
+- name: Copy configuration file
+  template: "src=config.json
+            dest={{ hls_dashboard_source_directory }}/src/config.json
+            owner={{ user }}
+            group={{ group }}
+            mode=\"u=rw,g=rw,o=r\""
+
+- name: Install node modules
+  command: chdir=HLS-Dashboard npm install
+
+
+- name: Build code
+  command: chdir=HLS-Dashboard npm run build
+
+- name: Install pm2 globally
+  become: true
+  command: chdir=HLS-Dashboard npm install pm2 -g
+
+- name: Run the code
+  command: chdir=HLS-Dashboard pm2 serve build/ 8080 --name "my-react-app"

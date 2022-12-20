@@ -11,3 +11,6 @@
     - controller
     - catalog
     - airflow
+    - prometheus
+    - grafana
+    - dashboard
