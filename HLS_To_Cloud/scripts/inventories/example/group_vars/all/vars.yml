@@ -27,6 +27,11 @@ openjdk_version: "openjdk-11-jdk"
 apache_maven_version: "apache-maven-3.6.3"
 apache_maven_url: "https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
+
+hls_dashboard_repo: https://github.com/NASA-IMPACT/HLS-Data-Transfer-Dashboard
+hls_dashboard_git_branch: main
+hls_dashboard_source_directory: "/home/{{ user }}/HLS-Dashboard"
+
 node_exporter_version: "1.0.1"
 node_exporter_bin: /usr/local/bin/node_exporter
 node_exporter_user: node-exporter
@@ -54,4 +59,3 @@ prometheus_var_config:
 # defaults file for roles/grafana
 
 grafana_admin_password: "mypassword"
-grafana_dashobard_location: "/var/lib/grafana"

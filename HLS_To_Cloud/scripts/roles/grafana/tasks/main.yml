@@ -26,26 +26,6 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: Create HLS Dashboard source directory
-  file: path={{hls_dashboard_source_directory}}
-    state=directory
-    mode=0755
-    owner={{ user }}
-    group={{ group }}
-
-- name: git checkout from hls_data_transfer_dashboard github repo {{ hls_dashboard_repo }} branch {{ hls_dashboard_git_branch }}
-  git: repo="{{ hls_dashboard_repo }}"
-    dest="{{ hls_dashboard_source_directory }}/"
-    version="{{ hls_dashboard_git_branch }}"
-  register: checkout
-  failed_when:
-    - checkout.failed
-    - not 'Local modifications exist in the destination' in checkout.msg
-  tags: update
-
-- name: Copy grafana dashboard
-  copy: remote_src=True src="{{ hls_dashboard_source_directory }}/grafana/dashboards/" dest="{{grafana_dashobard_location}}"
-
 - name: start service grafana-server
   systemd:
     name: grafana-server
