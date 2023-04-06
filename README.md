@@ -1,15 +1,25 @@
 ### Blaze: A High-Performance, Scalable, and Efficient Data Transfer Framework with Configurable and Extensible Features
 
 ### Transfer Architecture
-The diagram below shows the top level transfer architecture to move data from NASA S3 buckets to any cloud resource endpoint
+The diagram below shows the top level transfer architecture of Blaze to move data from a S3 bucket to any cloud resource endpoint
 
 ![Transfer Architecture](figures/transfer-architecture.jpg)
 
+### Overview
+Blaze is a product with the integration of several software tools to build end-to-end data transfer workflows which includes
+data preparation, transfers and post-processing. To accomplish that, Blaze uses following software
+
+1. [Apache Airavata MFT](https://github.com/apache/airavata-mft) - This is the data transfer engine of Blaze. Airavata MFT provides a highly scalable and performing
+agent based data transfer platform. Airavata MFT supports many cloud and legacy data transfer protocols and 
+inter-protocol data translations which provide the capability to transfer data seamlessly between different storage types
+2. [Apache Airflow](https://github.com/apache/airflow) - Blaze uses Airflow as the orchestration framework which executes the end to end data transfer workflow. 
+Blaze provides example workflows with integration between MFT and Transfer Catalog and users have the liberty to update 
+the workflow code according to their requirements
 ### Deployment
 
 Deployment of the platform includes installation of the Data Transfer Layer mentioned in the above diagram and registering source and destination storages in the Data Transfer Layer
 
-#### Prerequisites
+#### Prerequisites to deploy on EC2
 
 To have a minimal transfer layer, there should be 2 EC2 VMs (one for MFT Master and one for MFT Agent) created inside us-west-2 region. These VMs should have following features
 * Both should have a public host name / ip assigned to ssh from outside
@@ -48,7 +58,7 @@ ansible-playbook -i inventories/example install-agents.yml
 ```
 * To make sure that everything installed properly, go to http://<master-public-ip>:8080 from the browser and you should be able to see Airflow dashboard. Default username is airflow and default password is airflow. Make sure that you update the password immediately to secure the access
 
-* Finally, install and setup transfer orchestration workflow. First, you need to have an account created at https://urs.earthdata.nasa.gov and installation script will ask for those credentials. This is required to generate access credentials for NASA S3 endpoint
+* If you are configuring a NASA S3 endpoint, you need to install and setup the transfer orchestration workflow. First, you need to have an account created at https://urs.earthdata.nasa.gov and installation script will ask for those credentials. This is required to generate access credentials for NASA S3 endpoint
 ```
 ansible-playbook -i inventories/example configure-endpoints.yml
 ```
