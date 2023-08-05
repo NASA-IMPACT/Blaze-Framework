@@ -8,10 +8,11 @@ class BaseConfig:
     DB_PASSWORD = os.getenv("DB_PASSWORD", "{{ catalog_db_password }}")
     DB_TYPE = os.getenv("DB_TYPE", "postgresql")
     ITEMS_PER_PAGE = int(os.getenv("ITEMS_PER_PAGE", 1000))
+    LIMIT = int(os.getenv("LIMIT", 1000))
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     JWT_TOKEN_EXPIRATION_SECONDS = int(os.getenv("JWT_TOKEN_EXPIRATION_SECONDS", 300))
     DEBUG = os.getenv("FLASK_DEBUG", False)
-
+    ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS", "{'csv', 'zip'}")
 
 class LocalConfig(BaseConfig):
     DEBUG = os.getenv("FLASK_DEBUG", True)

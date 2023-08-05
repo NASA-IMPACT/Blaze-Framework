@@ -24,5 +24,5 @@ nasa_s3_endpoint: https://s3.us-west-2.amazonaws.com
 
 java_home: "/usr/lib/jvm/java-11"
 openjdk_version: "openjdk-11-jdk"
-apache_maven_version: "apache-maven-3.6.3"
-apache_maven_url: "https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+apache_maven_version: "apache-maven-3.8.8"
+apache_maven_url: "https://downloads.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz"
